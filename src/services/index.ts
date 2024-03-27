@@ -1,1 +1,2 @@
-export * from './axios.service';
+export * from './axiosService';
+export * from './movieService';
