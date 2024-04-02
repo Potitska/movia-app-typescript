@@ -1,22 +1,22 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 
-import {IMovie} from "../../../interfaces";
-import {movieService} from "../../../services";
 import {Movie} from "../Movie/Movie";
+import {useAppDispatch, useAppSelector} from "../../../hooks/reduxHooks";
+import {movieActions} from "../../../redux";
 
 import css from './movies.module.css';
 
 
 
 
-
 const Movies: FC = () => {
 
-    const [movies, setMovies] = useState<IMovie[]>([])
+   const dispatch = useAppDispatch();
+   const {movies} = useAppSelector(state => state.movies);
 
-    useEffect(() => {
-        movieService.getAll(1).then(({data}) => setMovies(data.results))
-    }, [])
+   useEffect(()=>{
+       dispatch(movieActions.getAll(1))
+   },[dispatch])
 
     return (
         <div className={css.list_card}>

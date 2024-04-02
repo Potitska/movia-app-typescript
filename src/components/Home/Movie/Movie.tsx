@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
+import {useNavigate} from "react-router-dom";
 
 import {IMovie} from "../../../interfaces";
 
 import css from './movie.module.css';
-import {useNavigate} from "react-router-dom";
 
 interface IProps {
-    movie: IMovie
+    movie: IMovie;
 }
 
 const Movie: FC<IProps> = ({movie}) => {

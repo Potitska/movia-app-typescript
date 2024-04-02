@@ -1,24 +1,37 @@
-import React, {FC, PropsWithChildren} from 'react';
-import {IMovie} from "../../../interfaces";
+import React, {FC, useEffect} from 'react';
+
+import {useAppDispatch, useAppSelector} from "../../../hooks/reduxHooks";
+import {movieActions} from "../../../redux";
+import {useAppLocation} from "../../../hooks/routerHooks";
 
 import css from './movieDetails.module.css';
-import {useAppLocation} from "../../../hooks/routerHooks";
 
 
 
 const MovieDetails: FC = () => {
-    const {state} = useAppLocation<IMovie>();
+    const {state} = useAppLocation();
+    const { id } = state as { id: number };
 
-    const {title,poster_path,overview,release_date,popularity,original_language} = state;
-    const img_url = `https://image.tmdb.org/t/p/w500${poster_path}`
+    const dispatch = useAppDispatch();
+    const {movieDetails} = useAppSelector(state => state.movies);
+
+
+
+    useEffect(()=>{
+        dispatch(movieActions.getMovieDetails(id))
+    },[dispatch,id])
+
+    if (!movieDetails){
+        return null
+    }
     return (
         <div className={css.card}>
-            <img src={img_url} alt={'poster'}/>
-            <div className={css.title}>{title} </div>
-            <div>Overview: {overview}</div>
-            <div>Original language: {original_language}</div>
-            <div>Release date: {release_date}</div>
-            <div>Popularity: {popularity}</div>
+            <img src={`https://image.tmdb.org/t/p/w500${movieDetails.poster_path}`} alt={'poster'}/>
+            <div className={css.title}>{movieDetails.title} </div>
+            <div>Overview: {movieDetails.overview}</div>
+            <div>Original language: {movieDetails.original_language}</div>
+            <div>Release date: {movieDetails.release_date}</div>
+            <div>Popularity: {movieDetails.popularity}</div>
         </div>
     );
 };

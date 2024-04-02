@@ -1,0 +1,15 @@
+.genresList{
+    height: 646px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content:space-evenly;
+    
+}
+
+.genresList >a{
+    color: darkblue;
+    border: 2px solid black;
+    border-radius: 5px;
+}

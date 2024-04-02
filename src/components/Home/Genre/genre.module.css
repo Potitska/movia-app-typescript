@@ -1,0 +1,8 @@
+.linkList {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.linkList > a {
+    text-decoration: none;
+}
