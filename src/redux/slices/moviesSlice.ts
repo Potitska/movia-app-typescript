@@ -24,7 +24,7 @@ const getAll = createAsyncThunk<IMovie[], number>(
     'moviesSlice/getAll',
     async (page, {rejectWithValue}) => {
         try {
-            const {data} = await movieService.getAll(1);
+            const {data} = await movieService.getAll(page);
             const {results} = data
             return results
         } catch (error) {
@@ -58,12 +58,13 @@ const allGenres = createAsyncThunk<IGenre[], void>(
     }
 )
 
-const movieByGenre = createAsyncThunk<IMovie[], [string,number]>(
+const movieByGenre = createAsyncThunk<IMovie[], [string]>(
     'moviesSlice/movieByGenre',
-    async ([genre_key, page], {rejectWithValue}) =>{
+    async ([id], {rejectWithValue}) =>{
         try {
-            const {data} = await movieService.getMoviesByGenre(genre_key, page);
+            const {data} = await movieService.getMoviesByGenre(id);
             const {results} = data
+            console.log(results);
             return results
         }catch (error) {
             return rejectWithValue('Failed to fetch genres')
@@ -88,7 +89,7 @@ const moviesSlice = createSlice({
         .addCase(movieByGenre.fulfilled,(state, action)=>{
             state.moviesByGenre = action.payload
         })
-        .addMatcher(isPending(getAll, allGenres, movieByGenre),(state, action)=>{
+        .addMatcher(isPending(getAll,getMovieDetails, allGenres, movieByGenre),(state, action)=>{
             state.loading = true
         })
         .addMatcher(isFulfilled(),(state, action)=>{

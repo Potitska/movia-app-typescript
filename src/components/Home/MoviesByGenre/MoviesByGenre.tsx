@@ -8,23 +8,24 @@ import {Movie} from "../Movie/Movie";
 import css from './moviesByGenre.module.css';
 
 const MoviesByGenre: FC = () => {
-    const {genre_key, page} = useParams();
+    const {id,} = useParams();
+
 
     const dispatch = useAppDispatch();
     const {moviesByGenre} = useAppSelector(state => state.movies);
 
 
     useEffect(()=>{
-        if (genre_key && page){
-            dispatch(movieActions.movieByGenre([genre_key, parseInt(page)]))
+        if (id ){
+            dispatch(movieActions.movieByGenre([id]))
         }
-    },[genre_key, page, dispatch])
+    },[id, dispatch])
 
 
 
     return (
         <div className={css.movies_list}>
-            {moviesByGenre? moviesByGenre.map(movie=><Movie key={movie.id} movie={movie}/>):null}
+            {moviesByGenre ? moviesByGenre && moviesByGenre.map(movie=><Movie key={movie.id} movie={movie}/>):null}
         </div>
     );
 }

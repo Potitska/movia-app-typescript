@@ -8,7 +8,7 @@ const movieService = {
     getGenres: () => axiosService.get<IGenres>(urls.genres()),
     getMovieByName: (name: string, page: number) => axiosService.get<ISearch>(urls.searchMovie(name, page)),
     getMovieById: (id: number) => axiosService.get<IMovie>(urls.movieById(id)),
-    getMoviesByGenre: (genre_key: string, page: number) => axiosService.get<IPagination>(urls.moviesByGenres(genre_key, page))
+    getMoviesByGenre: (id: string) => axiosService.get<IPagination>(urls.moviesByGenres(id))
 
 }
 
