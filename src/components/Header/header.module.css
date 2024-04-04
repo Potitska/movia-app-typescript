@@ -31,12 +31,12 @@
 
 .search {
     position: relative;
-    right: -234px;
-    top: 22px;
+    right: -44px;
+
 }
 
 .search > input {
-    border: 4px solid blue;
+    border: 2px solid darkblue;
     width: 200px;
     height: 35px;
     border-radius: 10px;
@@ -52,6 +52,6 @@
     width: 22px;
     opacity: 0.3;
     position: absolute;
-    left: 6px;
-    top: 6px
+    left: 8px;
+    top: 8px
 }

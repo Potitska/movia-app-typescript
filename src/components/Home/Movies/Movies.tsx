@@ -18,6 +18,7 @@ const Movies: FC = () => {
        dispatch(movieActions.getAll(1))
    },[dispatch])
 
+
     return (
         <div className={css.list_card}>
             {movies.map(movie=><Movie key={movie.id} movie={movie}/>)}

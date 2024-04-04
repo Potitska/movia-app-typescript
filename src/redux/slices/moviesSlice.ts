@@ -9,6 +9,7 @@ interface IState {
     genres: IGenre[];
     moviesByGenre: IMovie[];
     movieDetails:IMovie | null;
+    searchMovie:IMovie[];
     loading: boolean;
 }
 
@@ -17,6 +18,7 @@ const initialState: IState = {
     genres: [],
     moviesByGenre: [],
     movieDetails: null,
+    searchMovie:[],
     loading: false,
 };
 
@@ -72,6 +74,19 @@ const movieByGenre = createAsyncThunk<IMovie[], [string]>(
     }
 )
 
+const searchMoviesByName = createAsyncThunk<IMovie[], string>(
+    'moviesSlice/searchMoviesByName',
+    async (name,{rejectWithValue})=>{
+        try {
+            const {data} = await movieService.getMovieByName(name);
+            const {results} = data;
+            return results
+        }catch (error) {
+            return rejectWithValue('Failed to fetch genres')
+        }
+    }
+)
+
 const moviesSlice = createSlice({
     name: 'moviesSlice',
     initialState,
@@ -88,6 +103,9 @@ const moviesSlice = createSlice({
         })
         .addCase(movieByGenre.fulfilled,(state, action)=>{
             state.moviesByGenre = action.payload
+        })
+        .addCase(searchMoviesByName.fulfilled,(state, action)=>{
+            state.searchMovie = action.payload
         })
         .addMatcher(isPending(getAll,getMovieDetails, allGenres, movieByGenre),(state, action)=>{
             state.loading = true
@@ -106,6 +124,7 @@ const movieActions = {
     getMovieDetails,
     allGenres,
     movieByGenre,
+    searchMoviesByName
 }
 
 export {
